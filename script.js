@@ -64,22 +64,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // FAQ Toggle Logic
-    const faqItems = document.querySelectorAll('.faq-item');
+    // FAQ Toggle Logic - using event delegation for better reliability
+    document.addEventListener('click', (e) => {
+        const question = e.target.closest('.faq-question');
+        if (!question) return;
 
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question');
+        const currentItem = question.closest('.faq-item');
+        if (!currentItem) return;
 
-        question.addEventListener('click', () => {
-            // Close other items
-            faqItems.forEach(otherItem => {
-                if (otherItem !== item && otherItem.classList.contains('active')) {
-                    otherItem.classList.remove('active');
-                }
-            });
+        // Find all FAQ items
+        const allItems = document.querySelectorAll('.faq-item');
 
-            // Toggle current item
-            item.classList.toggle('active');
+        // Toggle current
+        const isActive = currentItem.classList.contains('active');
+
+        // Close all
+        allItems.forEach(item => {
+            item.classList.remove('active');
+            const answer = item.querySelector('.faq-answer');
+            if (answer) answer.style.maxHeight = null;
         });
+
+        // Open current if it wasn't active
+        if (!isActive) {
+            currentItem.classList.add('active');
+            const answer = currentItem.querySelector('.faq-answer');
+            if (answer) answer.style.maxHeight = answer.scrollHeight + "px";
+        }
     });
 });

@@ -544,12 +544,15 @@ header {
     align-items: center;
     cursor: pointer;
     user-select: none;
+    position: relative;
+    z-index: 2;
 }
 
 .faq-question h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0;
+    pointer-events: none;
 }
 
 .faq-toggle {
@@ -565,6 +568,7 @@ header {
     font-size: 1.2rem;
     cursor: pointer;
     transition: transform 0.3s ease, background 0.3s;
+    pointer-events: none;
 }
 
 .faq-item.active .faq-toggle {
