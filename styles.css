@@ -467,6 +467,63 @@ header {
     margin: 0 20px 40px;
 }
 
+/* Pricing */
+.pricing {
+    padding: 60px 0;
+}
+
+.pricing-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pricing-card h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.price span {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.pricing-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pricing-features li {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.pricing-hint {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
 /* Testimonials */
 .testimonials {
     padding: 60px 0;
