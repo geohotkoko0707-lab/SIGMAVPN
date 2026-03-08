@@ -92,4 +92,129 @@ document.addEventListener('DOMContentLoaded', () => {
             if (answer) answer.style.maxHeight = answer.scrollHeight + "px";
         }
     });
+
+    // Initialize Particles.js
+    if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#5c3cf6", "#00d2ff", "#ffffff"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "window",
+                "events": {
+                    "onhover": { "enable": true, "mode": "grab" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 180, "line_linked": { "opacity": 0.3 } },
+                    "push": { "particles_nb": 3 }
+                }
+            },
+            "retina_detect": true
+        });
+    }
+
+    // Scroll Reveal Observer
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealCallback = function (entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        root: null,
+        threshold: 0.15,
+        rootMargin: "0px"
+    });
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Custom Cursor Logic
+    const cursor = document.getElementById('magic-cursor');
+    const follower = document.getElementById('magic-cursor-follower');
+
+    if (cursor && follower) {
+        let cursorX = 0, cursorY = 0;
+        let followerX = 0, followerY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            cursorX = e.clientX;
+            cursorY = e.clientY;
+
+            // Cursor moves instantly
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+        });
+
+        // Follower trailing animation
+        const animateFollower = () => {
+            followerX += (cursorX - followerX) * 0.15;
+            followerY += (cursorY - followerY) * 0.15;
+
+            follower.style.left = `${followerX}px`;
+            follower.style.top = `${followerY}px`;
+
+            requestAnimationFrame(animateFollower);
+        };
+        animateFollower();
+
+        // Add hover effects on interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .faq-question, .server-item, .logo');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hovering');
+                follower.classList.add('hovering');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hovering');
+                follower.classList.remove('hovering');
+            });
+        });
+    }
+
+    // Typing Effect Logic
+    const typingText = document.getElementById('typing-text');
+    if (typingText) {
+        const words = ['Свободному', 'Быстрому', 'Безопасному', 'Анонимному'];
+        let wordIndex = 0;
+        let charIndex = words[0].length; // Start with the first word fully typed
+        let isDeleting = true;
+
+        const typeEffect = () => {
+            const currentWord = words[wordIndex];
+
+            if (isDeleting) {
+                typingText.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typingSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typingSpeed = 2000; // Pause at the end of word
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typingSpeed = 500; // Pause before typing new word
+            }
+
+            setTimeout(typeEffect, typingSpeed);
+        };
+
+        // Start effect after an initial delay
+        setTimeout(typeEffect, 3000);
+    }
 });

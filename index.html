@@ -26,11 +26,14 @@
 </head>
 
 <body>
+    <!-- Custom Cursor -->
+    <div id="magic-cursor"></div>
+    <div id="magic-cursor-follower"></div>
 
     <!-- Background Elements -->
     <div class="glow glow-1"></div>
     <div class="glow glow-2"></div>
-    <div class="grid-overlay"></div>
+    <div id="particles-js"></div>
 
     <header>
         <div class="container">
@@ -54,7 +57,8 @@
                     <div class="badge">🔥 Обновление v2.0</div>
                     <h1 class="hero-title">
                         Твой ключ <br>
-                        к <span>Свободному</span> интернету
+                        к <span id="typing-text" class="gradient-text">Свободному</span><span
+                            class="cursor-blink">|</span> интернету
                     </h1>
                     <p class="hero-subtitle">
                         Мощный Telegram-бот, который дает доступ к быстрейшим серверам VLESS. Смотри YouTube в 4K,
@@ -112,11 +116,30 @@
             </div>
         </section>
 
-        <section id="features" class="features">
+        <!-- Marquee Ticker Section -->
+        <div class="marquee-container section-divider">
+            <div class="marquee-content">
+                <span>✦ VLESS PROTOCOL</span>
+                <span>✦ YOUTUBE 4K</span>
+                <span>✦ NO LOGS POLICY</span>
+                <span>✦ AI READY</span>
+                <span>✦ AES-256 ENCRYPTION</span>
+                <span>✦ BYPASS CENSORSHIP</span>
+                <!-- Duplicate for seamless loop -->
+                <span>✦ VLESS PROTOCOL</span>
+                <span>✦ YOUTUBE 4K</span>
+                <span>✦ NO LOGS POLICY</span>
+                <span>✦ AI READY</span>
+                <span>✦ AES-256 ENCRYPTION</span>
+                <span>✦ BYPASS CENSORSHIP</span>
+            </div>
+        </div>
+
+        <section id="features" class="features reveal">
             <div class="container">
                 <h2 class="section-title">Почему <span>SigmaVPN</span>?</h2>
 
-                <div class="features-grid">
+                <div class="features-grid reveal">
                     <div class="feature-card glass-card">
                         <div class="feature-icon youtube-icon">📺</div>
                         <h3>YouTube без тормозов</h3>
@@ -148,10 +171,10 @@
             </div>
         </section>
 
-        <section id="pricing" class="pricing">
+        <section id="pricing" class="pricing reveal">
             <div class="container">
                 <h2 class="section-title">Стоимость <span>Подписки</span></h2>
-                <div class="pricing-card glass-card">
+                <div class="pricing-card glass-card reveal">
                     <h3>Безлимитный доступ к VLESS Ключу</h3>
                     <div class="price">150 ₽ <span>/ месяц</span></div>
                     <ul class="pricing-features">
@@ -170,10 +193,10 @@
             </div>
         </section>
 
-        <section class="testimonials">
+        <section class="testimonials reveal">
             <div class="container">
                 <h2 class="section-title">Отзывы <span>Пользователей</span></h2>
-                <div class="testimonials-grid">
+                <div class="testimonials-grid reveal">
                     <div class="testimonial-card glass-card">
                         <div class="testimonial-header">
                             <div class="avatar">👨‍💻</div>
@@ -213,7 +236,7 @@
             </div>
         </section>
 
-        <section class="faq">
+        <section class="faq reveal">
             <div class="container">
                 <h2 class="section-title">Частые <span>Вопросы</span></h2>
                 <div class="faq-list">
@@ -267,7 +290,7 @@
             </div>
         </section>
 
-        <section class="how-it-works">
+        <section class="how-it-works reveal">
             <div class="container">
                 <div class="glass-banner">
                     <h2>Просто как 1-2-3</h2>
@@ -329,6 +352,8 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="script.js"></script>
 </body>
 
