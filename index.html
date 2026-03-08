@@ -171,6 +171,69 @@
             </div>
         </section>
 
+        <!-- Live Stats Section -->
+        <section class="live-stats reveal">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="99.9">0</div>
+                        <div class="stat-label">Uptime серверов (%)</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="1500">0</div>
+                        <div class="stat-label">Активных юзеров</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="45">0</div>
+                        <div class="stat-label">ТБ трафика в сутки</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="12">0</div>
+                        <div class="stat-label">Пинг до Европы (ms)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table Section -->
+        <section class="comparison reveal">
+            <div class="container">
+                <h2 class="section-title">Почему мы <span>лучше других</span>?</h2>
+                <div class="comparison-grid">
+                    <!-- Column 1: Free VPNs -->
+                    <div class="comp-col glass-card">
+                        <div class="comp-header">
+                            <h3>Обычный VPN</h3>
+                            <p>Бесплатные или устаревшие сервисы</p>
+                        </div>
+                        <ul class="comp-list">
+                            <li><span class="cross">❌</span> Режут скорость до минимума</li>
+                            <li><span class="cross">❌</span> Постоянно блокируются провайдерами</li>
+                            <li><span class="cross">❌</span> Собирают и продают ваши данные</li>
+                            <li><span class="cross">❌</span> Видео грузится с буферизацией</li>
+                            <li><span class="cross">❌</span> Одно устройство на аккаунт</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: SigmaVPN (Highlighted) -->
+                    <div class="comp-col glass-card highlight-col">
+                        <div class="comp-badge">Ваш выбор</div>
+                        <div class="comp-header">
+                            <h3>SigmaVPN</h3>
+                            <p>Premium VLESS Телеграм-бот</p>
+                        </div>
+                        <ul class="comp-list">
+                            <li><span class="check">✅</span> Честный безлимит и 1Gbps каналы</li>
+                            <li><span class="check">✅</span> Протокол VLESS: скрыт от блокировок</li>
+                            <li><span class="check">✅</span> Строгая политика No-Logs</li>
+                            <li><span class="check">✅</span> YouTube 4K без единой задержки</li>
+                            <li><span class="check">✅</span> Поддержка до 3-х устройств сразу</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="pricing" class="pricing reveal">
             <div class="container">
                 <h2 class="section-title">Стоимость <span>Подписки</span></h2>
@@ -184,6 +247,11 @@
                         <li>✅ Поддержка потокового видео (YouTube 4K) и AI сервисов</li>
                         <li>✅ Мгновенная автоматическая выдача ключа в Telegram</li>
                     </ul>
+                    <div class="guarantee-badge">
+                        <span class="shield">🛡️</span>
+                        <p><strong>Гарантия возврата денег!</strong> Если вас не устроит скорость, мы вернем средства по
+                            первому запросу (в течение 3-х дней).</p>
+                    </div>
                     <a href="https://t.me/SIGMAVPN1BOT" target="_blank" class="btn btn-primary pulse">Оформить
                         подписку</a>
                     <p class="pricing-hint">Регистрация аккаунта и доставка электронной услуги происходят автоматически
@@ -231,6 +299,40 @@
                         </div>
                         <p>«Очень зашел бот. Скорость огонь, не режут трафик на ровном месте. Отдельный плюс за то, что
                             нет привязки карты для теста — взял, проверил, купил подписку.»</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Server Map Section -->
+        <section class="server-map-section reveal">
+            <div class="container">
+                <h2 class="section-title">Сервера по <span>Всему Миру</span></h2>
+                <div class="map-container glass-card">
+                    <!-- Using a dark, stylized SVG map of the world as background -->
+                    <div class="world-map">
+                        <div class="map-bg"></div>
+                        <div class="map-pin" style="top: 36%; left: 26%;" data-tooltip="США (Нью-Йорк)">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin" style="top: 26%; left: 51%;" data-tooltip="Германия (Франкфурт)">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin active-pin" style="top: 24%; left: 50%;"
+                            data-tooltip="Нидерланды (Амстердам) - 12ms">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin" style="top: 44%; left: 81%;" data-tooltip="Гонконг (Ожидается)">
+                            <div class="pulse-ring pending"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item"><span class="dot-green"></span> Активные сервера</div>
+                        <div class="legend-item"><span class="dot-gray"></span> В процессе запуска</div>
                     </div>
                 </div>
             </div>

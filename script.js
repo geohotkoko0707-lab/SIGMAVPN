@@ -215,6 +215,45 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         // Start effect after an initial delay
-        setTimeout(typeEffect, 3000);
+    }
+
+    // Live Stats Counter Animation
+    const statsElements = document.querySelectorAll('.stat-number');
+    let hasAnimatedStats = false;
+
+    const statsCallback = function (entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !hasAnimatedStats) {
+                hasAnimatedStats = true;
+                statsElements.forEach(el => {
+                    const target = parseFloat(el.getAttribute('data-target'));
+                    const duration = 2000; // 2 seconds
+                    const stepTime = 20; // 20ms per step
+                    const steps = Math.floor(duration / stepTime);
+                    const increment = target / steps;
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            el.textContent = target % 1 === 0 ? target : target.toFixed(1);
+                            clearInterval(timer);
+                        } else {
+                            el.textContent = target % 1 === 0 ? Math.floor(current) : current.toFixed(1);
+                        }
+                    }, stepTime);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const statsSection = document.querySelector('.live-stats');
+    if (statsSection) {
+        const statsObserver = new IntersectionObserver(statsCallback, {
+            root: null,
+            threshold: 0.5
+        });
+        statsObserver.observe(statsSection);
     }
 });
