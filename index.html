@@ -3,247 +3,521 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SigmaVPN Subscriptions</title>
-    <!-- Подключаем Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SigmaVPN - Свободный интернет</title>
+    <meta name="description"
+        content="Быстрый и стабильный VPN для обхода блокировок. Бесплатный тестовый период. Поддержка YouTube 4K, Gemini, ChatGPT.">
+    <meta name="yandex-verification" content="fddbdec165a2503d" />
+    <meta name="anypay-verification" content="9be511f3040c1fdb0b93faa8edde" />
+    <link rel="stylesheet" href="styles.css?v=3">
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=207">
+
+    <!-- Yandex.Metrika counter placeholder -->
+    <!-- Вставьте код Яндекс.Метрики сюда для аналитики -->
+
+    <!-- VK Pixel Code placeholder -->
+    <!-- Вставьте код пикселя ВКонтакте (VK Реклама) сюда -->
 </head>
 
 <body>
-    <!-- Background Animation -->
-    <div class="ambient-bg">
-        <div class="sphere sphere-1"></div>
-        <div class="sphere sphere-2"></div>
-        <div class="sphere sphere-3"></div>
-    </div>
+    <!-- Custom Cursor -->
+    <div id="magic-cursor"></div>
+    <div id="magic-cursor-follower"></div>
 
-    <div class="app-wrapper">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <span class="lightning">⚡</span>
-                <h1>SigmaVPN</h1>
-            </div>
-            <div class="server-status">
-                <div class="pulse-dot"></div>
-                <span id="serverCountDisplay">Сеть активна</span>
-            </div>
-        </header>
+    <!-- Background Elements -->
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div id="particles-js"></div>
 
-        <!-- Main Status Card -->
-        <main class="glass-card main-status-card">
-            <div class="user-profile">
-                <div class="avatar" id="userAvatar">U</div>
-                <div class="user-details">
-                    <div class="user-name" id="usernameDisplay">@username</div>
-                    <div class="status-badge loading" id="statusBadge">Загрузка...</div>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-icon">⚡</span>
+                    SigmaVPN
                 </div>
-            </div>
-
-            <div class="progress-container">
-                <svg class="progress-ring">
-                    <defs>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                            <feMerge>
-                                <feMergeNode in="coloredBlur" />
-                                <feMergeNode in="SourceGraphic" />
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <circle class="progress-ring__bg" cx="80" cy="80" r="70"></circle>
-                    <circle class="progress-ring__circle" cx="80" cy="80" r="70" id="progressCircle"></circle>
-                </svg>
-                <div class="progress-content">
-                    <span class="days-value" id="daysLeftDisplay">0</span>
-                    <span class="days-label" id="daysLabelDisplay">дней</span>
+                <div class="nav-links">
+                    <a href="#features">Преимущества</a>
+                    <a href="https://t.me/SIGMAVPN1BOT" target="_blank" class="btn btn-outline">В Telegram</a>
                 </div>
-            </div>
+            </nav>
+        </div>
+    </header>
 
-            <button class="btn btn-glow" id="payBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-                Продлить подписку
-            </button>
-            <button class="btn btn-glow" id="trialBtn"
-                style="display: none; margin-top: 10px; background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); box-shadow: none;">🎁
-                Получить тест</button>
-        </main>
-
-        <!-- Action Card -->
-        <div class="glass-card action-card">
-            <h2>Ваш ключ доступа</h2>
-            <p class="subtitle">Используйте этот ключ для подключения в приложении.</p>
-
-            <div class="key-container" id="copyBtn">
-                <code id="subLinkDisplay">Загрузка ключа...</code>
-                <div class="copy-icon" id="copyIcon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                </div>
-            </div>
-
-            <div class="quick-connect">
-                <button class="btn btn-app ios-btn" id="connectIosBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M18.71 19.5c-.83 1.24-1.71 2.45-3.1 2.48-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.36 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11">
-                        </path>
-                    </svg>
-                    <div class="btn-text">
-                        <span class="btn-title">iOS</span>
-                        <span class="btn-sub">V2RayTun / Shadowrocket</span>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="badge">🔥 Обновление v2.0</div>
+                    <h1 class="hero-title">
+                        Твой ключ <br>
+                        к <span id="typing-text" class="gradient-text">Свободному</span><span
+                            class="cursor-blink">|</span> интернету
+                    </h1>
+                    <p class="hero-subtitle">
+                        Мощный Telegram-бот, который дает доступ к быстрейшим серверам VLESS. Смотри YouTube в 4K,
+                        используй Gemini и обходи любые блокировки.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="https://t.me/SIGMAVPN1BOT" target="_blank" class="btn btn-primary pulse">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="tg-icon">
+                                <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Запустить Бота
+                        </a>
+                        <p class="cta-hint">Попробуй бесплатно прямо сейчас.</p>
                     </div>
-                </button>
-                <button class="btn btn-app android-btn" id="connectAndroidBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path
-                            d="M17.523 15.3414L19.5 18.7692L17.7686 19.7692L15.7923 16.3453C14.6531 16.8906 13.3615 17.2 11.9996 17.2C10.6385 17.2 9.34654 16.8906 8.20769 16.3457L6.23115 19.7692L4.5 18.7692L6.47692 15.3414C4.31615 13.9118 2.885 11.5164 2.80154 8.76923H21.1985C21.115 11.5164 19.6838 13.9118 17.523 15.3414ZM7 11.5C7.55228 11.5 8 11.0523 8 10.5C8 9.94772 7.55228 9.5 7 9.5C6.44772 9.5 6 9.94772 6 10.5C6 11.0523 6.44772 11.5 7 11.5ZM17 11.5C17.5523 11.5 18 11.0523 18 10.5C18 9.94772 17.5523 9.5 17 9.5C16.4477 9.5 16 9.94772 16 10.5C16 11.0523 16.4477 11.5 17 11.5ZM15 3.5L16.5 1.5L15.5 0.75L13.8 3H10.2L8.5 0.75L7.5 1.5L9 3.5C6.0125 4.3875 3.825 6.85 3.0625 9.875H20.9375C20.175 6.85 17.9875 4.3875 15 3.5Z">
-                        </path>
-                    </svg>
-                    <div class="btn-text">
-                        <span class="btn-title">Android</span>
-                        <span class="btn-sub">V2RayTun / v2rayNG</span>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="glass-card mockup-card">
+                        <div class="mockup-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="mockup-body">
+                            <div class="server-item">
+                                <span class="flag">🇺🇸</span>
+                                <div class="server-info">
+                                    <h4>US_SigmaVPN_4K_GMN</h4>
+                                    <p>Ограничений нет</p>
+                                </div>
+                                <span class="ping">12 MS</span>
+                            </div>
+                            <div class="server-item">
+                                <span class="flag">🇩🇪</span>
+                                <div class="server-info">
+                                    <h4>DE_SigmaVPN_Lite</h4>
+                                    <p>Стабильный</p>
+                                </div>
+                                <span class="ping">34 MS</span>
+                            </div>
+                            <div class="server-item active-server">
+                                <span class="flag">🇳🇱</span>
+                                <div class="server-info">
+                                    <h4>NL_SigmaVPN_Pro</h4>
+                                    <p>YouTube 4K Ready</p>
+                                </div>
+                                <span class="status-indicator"></span>
+                            </div>
+                        </div>
                     </div>
-                </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marquee Ticker Section -->
+        <div class="marquee-container section-divider">
+            <div class="marquee-content">
+                <span>✦ VLESS PROTOCOL</span>
+                <span>✦ YOUTUBE 4K</span>
+                <span>✦ NO LOGS POLICY</span>
+                <span>✦ AI READY</span>
+                <span>✦ AES-256 ENCRYPTION</span>
+                <span>✦ BYPASS CENSORSHIP</span>
+                <!-- Duplicate for seamless loop -->
+                <span>✦ VLESS PROTOCOL</span>
+                <span>✦ YOUTUBE 4K</span>
+                <span>✦ NO LOGS POLICY</span>
+                <span>✦ AI READY</span>
+                <span>✦ AES-256 ENCRYPTION</span>
+                <span>✦ BYPASS CENSORSHIP</span>
             </div>
         </div>
 
-        <!-- Referral Card -->
-        <div class="glass-card ref-card" id="refCard" style="display: none;">
-            <div class="ref-header">
-                <h2>Пригласить друга</h2>
-                <button class="icon-btn" id="shareRefBtn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                        <polyline points="16 6 12 2 8 6"></polyline>
-                        <line x1="12" y1="2" x2="12" y2="15"></line>
-                    </svg>
-                    Поделиться
-                </button>
-            </div>
-            <p class="subtitle">Дарим 7 дней подписки за каждого друга, который активирует VPN по ссылке.</p>
-            <div class="ref-stats">
-                <div class="ref-stat">
-                    <span class="ref-val" id="refCountDisplay">0</span>
-                    <span class="ref-label">Друзей</span>
-                </div>
-                <div class="ref-divider"></div>
-                <div class="ref-stat">
-                    <span class="ref-val accent" id="refBonusDisplay">+0 дн.</span>
-                    <span class="ref-label">Бонус</span>
-                </div>
-            </div>
-        </div>
+        <section id="features" class="features reveal">
+            <div class="container">
+                <h2 class="section-title">Почему <span>SigmaVPN</span>?</h2>
 
-        <!-- Statistics Card (New Position) -->
-        <div class="glass-card stats-card-block" id="statsCard" style="display: none;">
-            <h2
-                style="font-family: var(--font-heading); font-size: 16px; margin-bottom: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">
-                Ваша статистика</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-icon">💎</span>
-                    <div class="stat-text">Premium</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-icon">📱</span>
-                    <div class="stat-text" id="usageDevices">0</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-icon">🌍</span>
-                    <div class="stat-text" id="usageCountries">0</div>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-icon">🕒</span>
-                    <div class="stat-text" id="usageLastSeen">—</div>
-                </div>
-            </div>
-        </div>
+                <div class="features-grid reveal">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon youtube-icon">📺</div>
+                        <h3>YouTube без тормозов</h3>
+                        <p>Наши серверы отбираются по жестким критериям скорости и стабильности. Забудь про вечную
+                            буферизацию.</p>
+                    </div>
 
-        <!-- Promo Section -->
-        <div class="promo-input-group">
-            <input type="text" id="promoInput" placeholder="Есть промокод?" class="promo-input">
-            <button class="promo-btn" id="promoBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="9 11 12 14 22 4"></polyline>
-                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                </svg>
-            </button>
-        </div>
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon ai-icon">🤖</div>
+                        <h3>Gemini & ChatGPT</h3>
+                        <p>Специальная логика бота проверяет сервера на доступность искусственного интеллекта. Больше
+                            никаких "Недоступно в вашем регионе".</p>
+                    </div>
 
-        <p class="crypto-hint text-center">Оплата криптовалютой доступна в боте</p>
-    </div>
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon shield-icon">🛡️</div>
+                        <div class="feature-title"
+                            style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 20px;">Продвинутый
+                            VLESS</div>
+                        <p>Используем современные протоколы шифрования. Ваши данные защищены по стандарту AES-256 в
+                            любых публичных сетях.</p>
+                    </div>
 
-    <!-- Modals -->
-    <div class="modal-overlay" id="tariffModal">
-        <div class="modal-content">
-            <button class="modal-close" id="closeTariffBtn">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-            <h2 style="font-family: var(--font-heading); margin-bottom: 20px;">Продление подписки</h2>
-
-            <div class="tariff-options">
-                <div class="tariff-card">
-                    <div class="tariff-header">
-                        <h3>7 Дней</h3>
-                    </div>
-                    <div class="tariff-actions">
-                        <button class="btn btn-pay-yk" data-days="7">💳 Картой 99₽</button>
-                        <button class="btn btn-pay-stars" data-action="pay7_stars">⭐ Stars 55</button>
-                    </div>
-                </div>
-                <div class="tariff-card popular">
-                    <div class="tariff-badge">Популярный</div>
-                    <div class="tariff-header">
-                        <h3>30 Дней</h3>
-                    </div>
-                    <div class="tariff-actions">
-                        <button class="btn btn-pay-yk" data-days="30">💳 Картой 199₽</button>
-                        <button class="btn btn-pay-stars" data-action="pay30_stars">⭐ Stars 199</button>
-                    </div>
-                </div>
-                <div class="tariff-card">
-                    <div class="tariff-header">
-                        <h3>90 Дней</h3>
-                    </div>
-                    <div class="tariff-actions">
-                        <button class="btn btn-pay-yk" data-days="90">💳 Картой 399₽</button>
-                        <button class="btn btn-pay-stars" data-action="pay90_stars">⭐ Stars 399</button>
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon speed-icon">⚡</div>
+                        <div class="feature-title"
+                            style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 20px;">Мгновенное
+                            обновление</div>
+                        <p>Сервера проверяются автоматически. Бот поддерживает актуальность вашей подписки
+                            круглосуточно.</p>
                     </div>
                 </div>
             </div>
+        </section>
+
+        <!-- Live Stats Section -->
+        <section class="live-stats reveal">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="99.9">0</div>
+                        <div class="stat-label">Uptime серверов (%)</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="1500">0</div>
+                        <div class="stat-label">Активных юзеров</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="45">0</div>
+                        <div class="stat-label">ТБ трафика в сутки</div>
+                    </div>
+                    <div class="stat-item glass-card">
+                        <div class="stat-number" data-target="12">0</div>
+                        <div class="stat-label">Пинг до Европы (ms)</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Table Section -->
+        <section class="comparison reveal">
+            <div class="container">
+                <h2 class="section-title">Почему мы <span>лучше других</span>?</h2>
+                <div class="comparison-grid">
+                    <!-- Column 1: Free VPNs -->
+                    <div class="comp-col glass-card">
+                        <div class="comp-header">
+                            <div class="feature-title"
+                                style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 8px;">Обычный
+                                VPN</div>
+                            <p>Бесплатные или устаревшие сервисы</p>
+                        </div>
+                        <ul class="comp-list">
+                            <li><span class="cross">❌</span> Низкая скорость соединения</li>
+                            <li><span class="cross">❌</span> Нестабильная работа серверов</li>
+                            <li><span class="cross">❌</span> Собирают и продают ваши данные</li>
+                            <li><span class="cross">❌</span> Видео грузится с буферизацией</li>
+                            <li><span class="cross">❌</span> Одно устройство на аккаунт</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 2: SigmaVPN (Highlighted) -->
+                    <div class="comp-col glass-card highlight-col">
+                        <div class="comp-badge">Ваш выбор</div>
+                        <div class="comp-header">
+                            <div class="feature-title"
+                                style="font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 8px;">SigmaVPN
+                            </div>
+                            <p>Premium VLESS Телеграм-бот</p>
+                        </div>
+                        <ul class="comp-list">
+                            <li><span class="check">✅</span> 1Gbps каналы без лимитов</li>
+                            <li><span class="check">✅</span> Протокол VLESS: максимальная стабильность</li>
+                            <li><span class="check">✅</span> Строгая политика No-Logs</li>
+                            <li><span class="check">✅</span> Стабильный стриминг 4K-видео</li>
+                            <li><span class="check">✅</span> Поддержка до 3-х устройств сразу</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing reveal">
+            <div class="container">
+                <h2 class="section-title">Стоимость <span>Подписки</span></h2>
+                <div class="pricing-card glass-card reveal">
+                    <div class="feature-title"
+                        style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 15px;">Безлимитный
+                        доступ</div>
+                    <div class="price">199 ₽ <span>/ 30 дней</span></div>
+                    <ul class="pricing-features">
+                        <li>✅ Безлимитный трафик на высокой скорости</li>
+                        <li>✅ Использование на 3 устройствах одновременно</li>
+                        <li>✅ Доступ к премиум-локациям (Европа, США)</li>
+                        <li>✅ Строгое шифрование и анонимность</li>
+                        <li>✅ Мгновенная выдача ключа в Telegram</li>
+                    </ul>
+                    <div class="guarantee-badge">
+                        <span class="shield">🛡️</span>
+                        <p><strong>Гарантия возврата денег!</strong> Если вас не устроит скорость, мы вернем средства по
+                            первому запросу (в течение 3-х дней).</p>
+                    </div>
+                    <a href="https://t.me/SIGMAVPN1BOT" target="_blank" class="btn btn-primary pulse">Оформить в
+                        Telegram</a>
+
+                    <div class="web-pay-section"
+                        style="margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--glass-border);">
+                        <div class="feature-title"
+                            style="font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 20px;">🔥 Покупка
+                            без Telegram</div>
+                        <div class="quick-pay-form" style="display: flex; flex-direction: column; gap: 15px;">
+                            <input type="text" id="webUser" placeholder="@username (обязательно)"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 12px 16px; border-radius: 10px; color: #fff; font-family: inherit; font-size: 1rem;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <button class="btn btn-outline web-pay-btn" data-days="30">30 дней - 199₽</button>
+                                <button class="btn btn-outline web-pay-btn" data-days="90">90 дней - 399₽</button>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">Введите свой
+                                никнейм в Telegram. <br>После оплаты подписка активируется в боте мгновенно.</p>
+                        </div>
+                    </div>
+                    <p class="pricing-hint">Регистрация аккаунта и доставка электронной услуги происходят автоматически
+                        сразу при запуске бота. К оплате принимаются: Банковские карты (Visa, Mastercard, МИР), СБП,
+                        Криптовалюта.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials reveal">
+            <div class="container">
+                <h2 class="section-title">Отзывы <span>Пользователей</span></h2>
+                <div class="testimonials-grid reveal">
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-header">
+                            <div class="avatar">👨‍💻</div>
+                            <div class="user-info">
+                                <h4>Александр В.</h4>
+                                <span class="rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <p>«До этого перепробовал 5 разных сервисов, все отваливались к вечеру. SigmaVPN держится
+                            железобетонно уже второй месяц. YouTube 4K грузит без затыков.»</p>
+                    </div>
+
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-header">
+                            <div class="avatar">👩‍🎨</div>
+                            <div class="user-info">
+                                <h4>Мария И.</h4>
+                                <span class="rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <p>«Работаю с Canva и ChatGPT каждый день. Бот просто спасение — подключила на ноут и телефон за
+                            2 минуты, всё летает. Спасибо поддержке за помощь с настройкой.»</p>
+                    </div>
+
+                    <div class="testimonial-card glass-card">
+                        <div class="testimonial-header">
+                            <div class="avatar">🚀</div>
+                            <div class="user-info">
+                                <h4>Дмитрий С.</h4>
+                                <span class="rating">⭐⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+                        <p>«Очень зашел бот. Скорость огонь, не режут трафик на ровном месте. Отдельный плюс за то, что
+                            нет привязки карты для теста — взял, проверил, купил подписку.»</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Server Map Section -->
+        <section class="server-map-section reveal">
+            <div class="container">
+                <h2 class="section-title">Сервера по <span>Всему Миру</span></h2>
+                <div class="map-container glass-card">
+                    <!-- Using a dark, stylized SVG map of the world as background -->
+                    <div class="world-map">
+                        <div class="map-bg"></div>
+                        <div class="map-pin" style="top: 36%; left: 26%;" data-tooltip="США (Нью-Йорк)">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin" style="top: 26%; left: 51%;" data-tooltip="Германия (Франкфурт)">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin active-pin" style="top: 24%; left: 50%;"
+                            data-tooltip="Нидерланды (Амстердам) - 12ms">
+                            <div class="pulse-ring"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                        <div class="map-pin" style="top: 44%; left: 81%;" data-tooltip="Гонконг (Ожидается)">
+                            <div class="pulse-ring pending"></div>
+                            <div class="pin-dot"></div>
+                        </div>
+                    </div>
+                    <div class="map-legend">
+                        <div class="legend-item"><span class="dot-green"></span> Активные сервера</div>
+                        <div class="legend-item"><span class="dot-gray"></span> В процессе запуска</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq reveal">
+            <div class="container">
+                <h2 class="section-title">Частые <span>Вопросы</span></h2>
+                <div class="faq-list">
+                    <div class="faq-item glass-card">
+                        <div class="faq-question">
+                            <div class="feature-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">
+                                Насколько это безопасно?</div>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Мы используем современные протоколы шифрования трафика (VLESS/Reality). Ваше подключение
+                                надежно
+                                защищено от перехвата в любых сетях, а реальный IP-адрес остается скрытым.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-card">
+                        <div class="faq-question">
+                            <div class="feature-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">Нужно
+                                ли привязывать карту?</div>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Нет! Вы получаете тестовый период прямо в Telegram-боте без автосписаний.
+                                Подписка оплачивается разово удобным способом (картой РФ, криптой, балансом Telegram).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-card">
+                        <div class="faq-question">
+                            <div class="feature-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">Мои
+                                данные в безопасности?</div>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Да. Мы придерживаемся строгой политики No-logs (не храним историю вашей активности).
+                                Весь трафик надежно зашифрован банковским стандартом AES-256.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item glass-card">
+                        <div class="faq-question">
+                            <div class="feature-title" style="font-size: 1.25rem; font-weight: 700; color: #fff;">Лимиты
+                                подключений</div>
+                            <button class="faq-toggle">+</button>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Один аккаунт рассчитан на использование одним человеком на
+                                нескольких личных устройствах (смартфон, ПК, планшет). Лимит по умолчанию — до 3-х
+                                устройств одновременно.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-it-works reveal">
+            <div class="container">
+                <div class="glass-banner">
+                    <h2>Просто как 1-2-3</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-num">1</div>
+                            <p>Перейди в бота Telegram</p>
+                        </div>
+                        <div class="step-divider"></div>
+                        <div class="step">
+                            <div class="step-num">2</div>
+                            <p>Получи свою ссылку-подписку</p>
+                        </div>
+                        <div class="step-divider"></div>
+                        <div class="step">
+                            <div class="step-num">3</div>
+                            <p>Вставь в Hiddify или V2Ray</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content" style="flex-direction: column; gap: 20px; text-align: center;">
+                <div class="logo" style="justify-content: center;">⚡ SigmaVPN</div>
+
+                <div class="payment-methods"
+                    style="display: flex; gap: 15px; justify-content: center; align-items: center; filter: grayscale(1) opacity(0.7);">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Mastercard"
+                        height="30">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"
+                        height="20">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Mir-logo.SVG/1024px-Mir-logo.SVG.png"
+                        alt="МИР" height="15">
+                </div>
+
+                <div class="legal-links"
+                    style="display: flex; gap: 24px; font-size: 0.875rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="offer.html" target="_blank"
+                        style="text-decoration: underline; color: var(--text-muted);">Публичная Оферта</a>
+                    <a href="privacy.html" target="_blank"
+                        style="text-decoration: underline; color: var(--text-muted);">Политика Конфиденциальности</a>
+                    <a href="offer.html#refund" target="_blank"
+                        style="text-decoration: underline; color: var(--text-muted);">Условия возврата</a>
+                </div>
+
+                <div class="contact-info" style="font-size: 0.875rem; color: var(--text-muted);">
+                    Связь с нами: <a href="mailto:support@sigmavpn.space"
+                        style="text-decoration: underline; color: var(--text-muted);">support@sigmavpn.space</a><br>
+                    Telegram: <a href="https://t.me/SIGMAVPN1BOT" target="_blank"
+                        style="color: var(--text-muted);">@SIGMAVPN1BOT</a>
+                </div>
+
+                <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px;">© 2026 Свободный интернет для всех.</p>
+            </div>
         </div>
-    </div>
+    </footer>
 
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="spinner"></div>
-        <span style="color: white; font-weight: 500;">Загрузка...</span>
-    </div>
-
-    <!-- Hidden Helpers -->
-    <div id="pingCount" style="display: none;">0</div>
-    <div id="pingLocations" style="display: none;">...</div>
-    <div id="supportBtn" style="display: none;"></div>
-
-    <script src="app.js?v=209"></script>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Web-based Payment Logic
+        const API_BASE = "https://sub.sigmavpn.space";
+        document.querySelectorAll('.web-pay-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const user = document.getElementById('webUser').value.trim();
+                const days = btn.dataset.days;
+                if (!user) {
+                    alert("Пожалуйста, введите ваш Telegram username!");
+                    return;
+                }
+                btn.disabled = true;
+                btn.textContent = "Загрузка...";
+                try {
+                    const res = await fetch(`${API_BASE}/api/pay/yookassa?user=${encodeURIComponent(user)}&days=${days}`);
+                    const data = await res.json();
+                    if (data.ok && data.url) {
+                        window.location.href = data.url;
+                    } else {
+                        alert("❌ " + (data.error || "Ошибка создания платежа"));
+                        btn.disabled = false;
+                        btn.textContent = days + " дней - " + (days == 30 ? "199" : "399") + "₽";
+                    }
+                } catch (err) {
+                    alert("❌ Ошибка соединения. Проверьте подключение к интернету.");
+                    btn.disabled = false;
+                    btn.textContent = days + " дней - " + (days == 30 ? "199" : "399") + "₽";
+                }
+            };
+        });
+    </script>
 </body>
 
 </html>
